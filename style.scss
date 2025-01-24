@@ -1,0 +1,37 @@
+@use "./theme/tokyo-night-dark" as theme;
+
+window.Bar {
+  font-weight: bold;
+  font-family: theme.$font-family;
+  font-size: 20px;
+
+  > centerbox {
+    background: theme.$background;
+    border-radius: 12px;
+    margin: 16px;
+    padding: 8px;
+  }
+
+  button {
+    margin: 2px;
+  }
+
+  button.workspace-button {
+    background: transparent;
+    color: theme.$magenta;
+    border: none;
+  }
+
+  button.focused {
+    background: theme.$background;
+    color: theme.$blue;
+  }
+
+  .neutral-text {
+    color: theme.$base07;
+    font-size: 20px;
+  }
+
+  .window-display {
+  }
+}

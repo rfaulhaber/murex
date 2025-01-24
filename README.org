@@ -1,0 +1,3 @@
+#+title: murex
+
+My custom Hyprland shell. This is completely bespoke to my needs so your milage may vary severely.
