@@ -7,9 +7,9 @@ window.Bar {
 
   > centerbox {
     background: theme.$background;
-    border-radius: 12px;
-    margin: 16px;
-    padding: 8px;
+    border-radius: 1rem;
+    margin: 0.5rem;
+    padding: 0.5rem;
   }
 
   button {
@@ -30,6 +30,34 @@ window.Bar {
   .neutral-text {
     color: theme.$base07;
     font-size: 20px;
+  }
+
+  .cpu-container {
+  }
+
+  .resource-symbol {
+    margin-right: 0.5rem;
+    -gtk-icon-size: 1.25rem;
+  }
+
+  .resource-load-1 {
+    color: theme.$base07;
+  }
+
+  .resource-load-2 {
+    color: theme.$cyan;
+  }
+
+  .resource-load-3 {
+    color: theme.$green;
+  }
+
+  .resource-load-4 {
+    color: theme.$yellow;
+  }
+
+  .resource-load-5 {
+    color: theme.$red;
   }
 
   .window-display {
