@@ -1,9 +1,11 @@
+import { Gtk } from "astal/gtk4";
 import { Variable } from "astal";
 import { makeClasses } from "../../../utils";
 
 export interface ResourceProps<T> {
   cmd: string;
-  symbol: string;
+  symbol?: string;
+  label?: string;
   formatter: (T) => string;
   refreshRate?: number;
 }
@@ -11,6 +13,7 @@ export interface ResourceProps<T> {
 export default function Resource<T>({
   cmd,
   symbol,
+  label,
   formatter,
   refreshRate,
 }: ResourceProps<T>) {
@@ -20,9 +23,9 @@ export default function Resource<T>({
     (out, prev) => formatter(out),
   );
 
-  const resourceSymbolStyles = Variable.derive([resourceLoad], (load) =>
+  const resourceTextStyles = Variable.derive([resourceLoad], (load) =>
     makeClasses({
-      "resource-symbol": true,
+      "resource-text": true,
       "resource-load-1": load <= 40,
       "resource-load-2": load > 40 && load <= 60,
       "resource-load-3": load > 60 && load <= 80,
@@ -32,10 +35,20 @@ export default function Resource<T>({
   );
 
   return (
-    <box halign cssClasses={["resource-container"]}>
-      <image cssClasses={resourceSymbolStyles()} iconName={symbol} />
+    <box
+      orientation={Gtk.Orientation.VERTICAL}
+      cssClasses={["resource-container"]}
+      onDestroy={() => {
+        resourceLoad.drop();
+      }}
+    >
       <label
-        cssClasses={["resource-text"]}
+        halign={Gtk.Align.START}
+        cssClasses={["resource-label"]}
+        label={label}
+      />
+      <label
+        cssClasses={resourceTextStyles()}
         label={resourceLoad((value) => `${value}%`)}
       />
     </box>

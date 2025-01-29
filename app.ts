@@ -4,7 +4,7 @@ import Bar from "./widget/Bar";
 
 App.start({
   css: style,
-  icons: "./icons",
+  // icons: "./icons",
   main() {
     App.get_monitors().map(Bar);
   },

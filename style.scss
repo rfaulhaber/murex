@@ -38,6 +38,11 @@ window.Bar {
   .resource-symbol {
     margin-right: 0.5rem;
     -gtk-icon-size: 1.25rem;
+    color: green;
+  }
+
+  .resource-label {
+    font-size: 0.75rem;
   }
 
   .resource-load-1 {
@@ -58,6 +63,10 @@ window.Bar {
 
   .resource-load-5 {
     color: theme.$red;
+  }
+
+  .end-container {
+    margin-right: 1rem;
   }
 
   .window-display {

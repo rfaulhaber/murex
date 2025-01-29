@@ -30,14 +30,25 @@ export default function Bar(gdkmonitor: Gdk.Monitor) {
         >
           <WorkspaceDisplay workspaces={workspaces} />
         </box>
-        <box>
-          <Resource
-            cmd="sys cpu -l | get cpu_usage | math avg"
-            symbol="cpu-symbolic"
-            formatter={Math.floor}
-          />
-        </box>
-        <box hexpand halign={Gtk.Align.END} cssClasses={["clock-container"]}>
+        <box />
+        <box
+          hexpand
+          halign={Gtk.Align.END}
+          cssClasses={["end-container"]}
+          spacing={30}
+        >
+          <box hexpand spacing={20} cssClasses={["resources-container"]}>
+            <Resource
+              cmd="sys cpu -l | get cpu_usage | math avg"
+              label="CPU"
+              formatter={Math.floor}
+            />
+            <Resource
+              cmd="sys mem | $in.used / $in.total"
+              label="MEM"
+              formatter={(val) => Math.floor(val * 100)}
+            />
+          </box>
           <Clock />
         </box>
       </centerbox>
