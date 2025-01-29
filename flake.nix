@@ -31,7 +31,7 @@
     formatter = forAllSystems (system: pkgs: pkgs.alejandra);
 
     packages = forAllSystems (system: pkgs: {
-      default = pkgs.stdenvNoCC.mkDerivation {
+      default = pkgs.stdenvNoCC.mkDerivation (finalAttrs: {
         name = projectName;
         pname = projectName;
 
@@ -41,18 +41,24 @@
           ags.packages.${pkgs.system}.default
           wrapGAppsHook
           gobject-introspection
+          pnpm.configHook
         ];
 
-        buildInputs = with astal.packages.${system}; [
-          astal3
-          io
-        ];
+        buildInputs = with astal.packages.${system};
+          [
+            astal4
+          ];
+
+        pnpmDeps = pkgs.pnpm.fetchDeps {
+          inherit (finalAttrs) name pname src;
+          hash = "sha256-3Up+eO8gqj6yFhz0M/cN6AhiZHwarNwT2ogzT9CUhnw=";
+        };
 
         installPhase = ''
           mkdir -p $out/bin
           ags bundle app.ts $out/bin/${projectName}
         '';
-      };
+      });
     });
 
     devShells = forAllSystems (system: pkgs: {
