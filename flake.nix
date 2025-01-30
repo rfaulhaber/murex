@@ -65,9 +65,12 @@
         installPhase = ''
           mkdir -p $out/{bin,lib}
           mv ./out/murex $out/lib/murex-shell
-          echo "ags run $out/lib/murex-shell --gtk4" > $out/bin/murex
-          chmod +x $out/bin/murex
+          makeWrapper ${ags.packages.${system}.ags}/bin/ags $out/bin/murex \
+            --add-flags "run $out/lib/murex-shell --gtk4"
         '';
+
+        postInstall = ''
+'';
       });
     });
 
