@@ -42,21 +42,31 @@
           wrapGAppsHook
           gobject-introspection
           pnpm.configHook
+          nodejs_23
+          makeWrapper
         ];
 
-        buildInputs = with astal.packages.${system};
-          [
-            astal4
-          ];
+        buildInputs = with astal.packages.${system}; [
+          astal4
+          gjs
+          hyprland
+        ];
 
         pnpmDeps = pkgs.pnpm.fetchDeps {
           inherit (finalAttrs) name pname src;
-          hash = "sha256-3Up+eO8gqj6yFhz0M/cN6AhiZHwarNwT2ogzT9CUhnw=";
+          hash = "sha256-JS0KMXvrDuNDoOQqzwHETf3uRsYQt0oROt+BjEBq3n8=";
         };
 
+        buildPhase = ''
+          export ASTAL_PATH=${astal.packages.${system}.gjs}/share/astal/gjs
+          pnpm run build
+        '';
+
         installPhase = ''
-          mkdir -p $out/bin
-          ags bundle app.ts $out/bin/${projectName}
+          mkdir -p $out/{bin,lib}
+          mv ./out/murex $out/lib/murex-shell
+          echo "ags run $out/lib/murex-shell --gtk4" > $out/bin/murex
+          chmod +x $out/bin/murex
         '';
       });
     });
@@ -82,7 +92,15 @@
           nodePackages_latest.pnpm
           nodePackages_latest.prettier
           nodePackages_latest.typescript-language-server
+
+          esbuild
+
+          gjs
+          gtk4-layer-shell
         ];
+
+        ASTAL_PATH = "${astal.packages.${system}.gjs}/share/astal/gjs";
+        # LD_PRELOAD = "${pkgs.gtk4-layer-shell}/lib/libgtk4-layer-shell.so";
       };
     });
   };
